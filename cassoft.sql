@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Окт 03 2021 г., 17:34
+-- Время создания: Окт 03 2021 г., 23:04
 -- Версия сервера: 8.0.26-0ubuntu0.20.04.2
 -- Версия PHP: 7.4.3
 
@@ -34,16 +34,19 @@ CREATE TABLE `messages` (
   `title` varchar(255) NOT NULL,
   `text` text NOT NULL,
   `sendler_id` varchar(96) NOT NULL,
-  `receiver_id` varchar(96) NOT NULL
+  `receiver_id` varchar(96) NOT NULL,
+  `readed` tinyint(1) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Дамп данных таблицы `messages`
 --
 
-INSERT INTO `messages` (`id`, `group_id`, `title`, `text`, `sendler_id`, `receiver_id`) VALUES
-(1, 1, 'Сообщение', 'текст', '1', '2'),
-(2, 1, 'Message 2', 'sometext', '1', '2');
+INSERT INTO `messages` (`id`, `group_id`, `title`, `text`, `sendler_id`, `receiver_id`, `readed`, `date_added`) VALUES
+(1, 1, 'Сообщение', 'текст', '1', '2', 1, '2021-10-03 22:30:33'),
+(2, 1, 'Message 2', 'sometext', '1', '2', 0, '2021-10-03 22:30:33'),
+(3, 2, 'Уведомление', 'Уведомление', '1', '2', 1, '2021-10-03 22:30:33');
 
 -- --------------------------------------------------------
 
@@ -54,7 +57,7 @@ INSERT INTO `messages` (`id`, `group_id`, `title`, `text`, `sendler_id`, `receiv
 CREATE TABLE `message_group` (
   `id` int NOT NULL,
   `parent_id` int NOT NULL,
-  `title` varchar(46) NOT NULL,
+  `group_title` varchar(46) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `color` int NOT NULL,
   `user_id` int NOT NULL,
   `date_added` datetime NOT NULL
@@ -64,8 +67,9 @@ CREATE TABLE `message_group` (
 -- Дамп данных таблицы `message_group`
 --
 
-INSERT INTO `message_group` (`id`, `parent_id`, `title`, `color`, `user_id`, `date_added`) VALUES
-(1, 0, 'Основные', 0, 1, '2021-10-03 15:23:51');
+INSERT INTO `message_group` (`id`, `parent_id`, `group_title`, `color`, `user_id`, `date_added`) VALUES
+(1, 0, 'Основные', 0, 1, '2021-10-03 15:23:51'),
+(2, 0, 'Оповещения', 1, 1, '2021-10-03 15:23:51');
 
 -- --------------------------------------------------------
 
@@ -149,13 +153,13 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT для таблицы `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `message_group`
 --
 ALTER TABLE `message_group`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `users`

@@ -47,14 +47,21 @@ function getUserInfo($id){
     return $data;
 }
 
-function getMessages($id){
-    $result = getUserMessages($id);
-    $row = $result->fetch_all();
-    var_dump($row);die;
+function getMessageGroups($id_user){
+    $row = getGroups($id_user);
+    foreach($row as $value){
+        $group_id = $value['id'];
+        $group_title = $value['group_title'];
+        $row = getUserMessages($id_user, $group_id);
+        $messages[$group_title] = $row;
+    }
+    return $messages;       
 }
 
-function getMessageGroups(){
-    getGroups();       
+function getMessage($id_message){
+    $row = getMessageQuery($id_message);
+    p($row);die;
+    return $row;   
 }
 
 if(isset($_POST['email']) && isset($_POST['password'])){
@@ -65,4 +72,10 @@ if(isset($_GET['exit'])){
         session_start();
     }        
     session_unset();
+}
+
+function p($p){
+    echo '<pre>';
+    print_r($p);
+    echo '</pre>';
 }
