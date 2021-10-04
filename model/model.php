@@ -1,8 +1,4 @@
 <?php
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
 $path = $_SERVER['DOCUMENT_ROOT'];
 include_once "$path/cassoft/config.php";
 
@@ -41,16 +37,17 @@ function getUserMessages($id_user, $group_id){
     return $row;
 }
 
-function getMessageQuery($id_message){
+function getMessageQuery($id_message, $user_id){
     $mysqli = connectBD();
     $query = "SELECT * FROM `messages` WHERE `id` = $id_message";
     $result = $mysqli->query($query);
-
-    $queryUpdate = "UPDATE `messages` SET `readed` = '1' WHERE `id` = $id_message";
-    $mysqli->query($queryUpdate);
-
-    $mysqli->close();
     $row = $result->fetch_assoc();
+
+    if($user_id != $row['sendler_id']){
+        $queryUpdate = "UPDATE `messages` SET `readed` = '1' WHERE `id` = $id_message";
+        $mysqli->query($queryUpdate);
+    }
+    $mysqli->close();
     return $row;
 }
 
@@ -61,4 +58,41 @@ function getGroups($id_user){
     $mysqli->close();
     $row = $result->fetch_all(MYSQLI_ASSOC);
     return $row;
+}
+
+function getAllGroupsBD(){
+    $mysqli = connectBD();
+    $query = "SELECT `id`,`parent_id`,`group_title`,`color` FROM `message_group`";
+    $result = $mysqli->query($query);
+    $mysqli->close();
+    $row = $result->fetch_all(MYSQLI_ASSOC);
+    return $row;
+}
+
+function getVerifiedUsersBD(){
+    $mysqli = connectBD();
+    $query = "SELECT
+                users.id,
+                users.name, 
+                users.email
+                FROM 
+                users
+                LEFT JOIN user_groups ON users.id=user_groups.user_id
+                 WHERE user_groups.name='Проверенные'";
+    $result = $mysqli->query($query);
+    $mysqli->close();
+    $row = $result->fetch_all(MYSQLI_ASSOC);
+    return $row;
+}
+
+function saveMessge($group_id, $title, $text, $sendler_id, $receiver_id){
+    $mysqli = connectBD();
+    $query = "INSERT INTO `messages` (`group_id`, `title`, `text`, `sendler_id`, `receiver_id`, `date_added`) VALUES (
+        '$group_id', 
+        '$title', 
+        '$text', 
+        '$sendler_id', 
+        '$receiver_id', 
+        CURRENT_TIMESTAMP);";
+    $mysqli->query($query);
 }

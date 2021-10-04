@@ -21,13 +21,16 @@
                                     <?php }?>
                                 </li>
                                 </ol>
+                                <div class="col align-self-center" style="text-align: center;margin-top: 10px;">
+                                    <a class="btn btn-primary" href="add_post.php" role="button">Отправить сообщение</a>
+                                </div>
                     <?php break; }else{ ?>
-                            Вы не можете писать сообщения
+                            Вы не можете просматривать сообщения
                         <?php break; } ?>
                     <?php } ?>
             <?php } ?>
             </div>
-        </div>                      
+        </div>                 
     </div>
 </body>
 </html>

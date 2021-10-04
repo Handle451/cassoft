@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Окт 04 2021 г., 12:01
+-- Время создания: Окт 04 2021 г., 22:35
 -- Версия сервера: 8.0.26-0ubuntu0.20.04.2
 -- Версия PHP: 7.4.3
 
@@ -46,8 +46,14 @@ CREATE TABLE `messages` (
 INSERT INTO `messages` (`id`, `group_id`, `title`, `text`, `sendler_id`, `receiver_id`, `readed`, `date_added`) VALUES
 (1, 1, 'Сообщение', 'текст', '1', '2', 1, '2021-10-03 22:30:33'),
 (2, 1, 'Message 2', 'sometext', '1', '2', 0, '2021-10-03 22:30:33'),
-(3, 2, 'Уведомление', 'Уведомление', '1', '2', 0, '2021-10-03 22:30:33'),
-(4, 1, 'Some', '123', '2', '1', 0, '2021-10-04 11:59:09');
+(3, 2, 'Уведомление', 'Уведомление', '1', '2', 1, '2021-10-03 22:30:33'),
+(4, 1, 'Some', '123', '2', '1', 0, '2021-10-04 11:59:09'),
+(5, 4, 'Пятница', 'Пиво', '1', '2', 0, '2021-10-04 21:25:01'),
+(6, 4, 'Аджакс?', 'Нет', '1', '3', 0, '2021-10-04 21:57:30'),
+(7, 2, '123', '123', '1', '1', 0, '2021-10-04 22:12:22'),
+(8, 4, 'Somebody', 'once told me the world is gonna roll me', '1', '3', 1, '2021-10-04 22:15:44'),
+(9, 4, 'Два', 'ч', '2', '1', 1, '2021-10-04 22:18:08'),
+(10, 2, 'Админу', '123', '2', '1', 0, '2021-10-04 22:29:48');
 
 -- --------------------------------------------------------
 
@@ -59,7 +65,7 @@ CREATE TABLE `message_group` (
   `id` int NOT NULL,
   `parent_id` int NOT NULL,
   `group_title` varchar(46) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `color` int NOT NULL,
+  `color` text NOT NULL,
   `user_id` int NOT NULL,
   `receiver_id` int NOT NULL,
   `date_added` datetime NOT NULL
@@ -70,8 +76,9 @@ CREATE TABLE `message_group` (
 --
 
 INSERT INTO `message_group` (`id`, `parent_id`, `group_title`, `color`, `user_id`, `receiver_id`, `date_added`) VALUES
-(1, 0, 'Основные', 0, 1, 2, '2021-10-03 15:23:51'),
-(2, 0, 'Оповещения', 1, 1, 2, '2021-10-03 15:23:51');
+(1, 0, 'Основные', 'black', 1, 2, '2021-10-03 15:23:51'),
+(2, 0, 'Оповещения', '#7156FF', 1, 2, '2021-10-03 15:23:51'),
+(4, 0, 'Не срочные', '#FFE47D', 2, 1, '2021-10-04 20:20:04');
 
 -- --------------------------------------------------------
 
@@ -95,7 +102,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `status`, `name`, `email`, `phone`, `password`, `newsletter`) VALUES
 (1, 1, 'test', 'test@test.ru', '123456', '123', 0),
-(2, 1, 'User', 'user@user.ru', '123', '123', 1);
+(2, 1, 'User', 'user@user.ru', '123', '123', 1),
+(3, 1, 'John', 'john@john.ru', '123', '123', 1);
 
 -- --------------------------------------------------------
 
@@ -118,7 +126,7 @@ INSERT INTO `user_groups` (`group_id`, `name`, `description`, `user_id`) VALUES
 (0, 'Пользователи', 'Простые пользователи', 3),
 (1, 'Проверенные', 'Проверенные пользователи', 1),
 (3, 'Администратор', 'Администратор', 1),
-(4, 'Проверенные\r\n', 'Проверенные пользователи', 2);
+(5, 'Проверенные', 'Проверенные пользователи', 2);
 
 --
 -- Индексы сохранённых таблиц
@@ -156,25 +164,25 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT для таблицы `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `message_group`
 --
 ALTER TABLE `message_group`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `user_groups`
 --
 ALTER TABLE `user_groups`
-  MODIFY `group_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `group_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

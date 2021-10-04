@@ -1,8 +1,4 @@
-<?php 
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
+<?php
 $path = $_SERVER['DOCUMENT_ROOT'];
 include_once "$path/cassoft/model/model.php";
 
@@ -59,23 +55,47 @@ function getMessageGroups($id_user){
 }
 
 function getMessage($id_message){
-    $row = getMessageQuery($id_message);
+    $user_id = $_SESSION['id'];
+    $row = getMessageQuery($id_message, $user_id);
     p($row);die;
     return $row;   
 }
 
+function getAllGroups(){
+    $result = getAllGroupsBD();
+    return $result;
+}
+
+function getVerifiedUsers(){
+    $result = getVerifiedUsersBD();
+    return $result;
+}
+
+function sendMessage(){
+    $group_id = $_POST['group_message'];
+    $title = $_POST['title_message'];
+    $text = $_POST['text_message'];
+    $receiver_id =$_POST['user_message'];
+
+    session_start();
+    $sendler_id = $_SESSION['id'];
+
+    saveMessge($group_id, $title, $text, $sendler_id, $receiver_id);
+
+    header('Location: http://localhost/cassoft/posts.php');
+    exit();
+}
+
+
 if(isset($_POST['email']) && isset($_POST['password'])){
     authorize();
+}
+if(isset($_POST['title_message']) && isset($_POST['user_message']) && isset($_POST['group_message'])){
+    sendMessage();
 }
 if(isset($_GET['exit'])){
     if(!isset($_SESSION)){
         session_start();
     }        
     session_unset();
-}
-
-function p($p){
-    echo '<pre>';
-    print_r($p);
-    echo '</pre>';
 }
