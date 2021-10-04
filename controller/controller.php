@@ -57,7 +57,10 @@ function getMessageGroups($id_user){
 function getMessage($id_message){
     $user_id = $_SESSION['id'];
     $row = getMessageQuery($id_message, $user_id);
-    p($row);die;
+
+    $user_info = getShortInfoUser($row['receiver_id']);
+    $row = array_merge($row, $user_info);
+
     return $row;   
 }
 

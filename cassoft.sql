@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Окт 04 2021 г., 22:35
+-- Время создания: Окт 04 2021 г., 23:35
 -- Версия сервера: 8.0.26-0ubuntu0.20.04.2
 -- Версия PHP: 7.4.3
 
@@ -47,13 +47,8 @@ INSERT INTO `messages` (`id`, `group_id`, `title`, `text`, `sendler_id`, `receiv
 (1, 1, 'Сообщение', 'текст', '1', '2', 1, '2021-10-03 22:30:33'),
 (2, 1, 'Message 2', 'sometext', '1', '2', 0, '2021-10-03 22:30:33'),
 (3, 2, 'Уведомление', 'Уведомление', '1', '2', 1, '2021-10-03 22:30:33'),
-(4, 1, 'Some', '123', '2', '1', 0, '2021-10-04 11:59:09'),
-(5, 4, 'Пятница', 'Пиво', '1', '2', 0, '2021-10-04 21:25:01'),
-(6, 4, 'Аджакс?', 'Нет', '1', '3', 0, '2021-10-04 21:57:30'),
-(7, 2, '123', '123', '1', '1', 0, '2021-10-04 22:12:22'),
-(8, 4, 'Somebody', 'once told me the world is gonna roll me', '1', '3', 1, '2021-10-04 22:15:44'),
-(9, 4, 'Два', 'ч', '2', '1', 1, '2021-10-04 22:18:08'),
-(10, 2, 'Админу', '123', '2', '1', 0, '2021-10-04 22:29:48');
+(4, 1, 'Some', '123', '2', '1', 1, '2021-10-04 11:59:09'),
+(8, 4, 'Somebody', 'once told me the world is gonna roll me', '1', '3', 1, '2021-10-04 22:15:44');
 
 -- --------------------------------------------------------
 
@@ -113,7 +108,7 @@ INSERT INTO `users` (`id`, `status`, `name`, `email`, `phone`, `password`, `news
 
 CREATE TABLE `user_groups` (
   `group_id` int NOT NULL,
-  `name` varchar(96) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `group_name` varchar(96) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `user_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -122,7 +117,7 @@ CREATE TABLE `user_groups` (
 -- Дамп данных таблицы `user_groups`
 --
 
-INSERT INTO `user_groups` (`group_id`, `name`, `description`, `user_id`) VALUES
+INSERT INTO `user_groups` (`group_id`, `group_name`, `description`, `user_id`) VALUES
 (0, 'Пользователи', 'Простые пользователи', 3),
 (1, 'Проверенные', 'Проверенные пользователи', 1),
 (3, 'Администратор', 'Администратор', 1),

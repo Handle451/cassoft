@@ -1,4 +1,8 @@
 <?php
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
 $path = $_SERVER['DOCUMENT_ROOT'];
 include_once "$path/cassoft/config.php";
 
@@ -26,6 +30,15 @@ function getUser($id){
     $result = $mysqli->query($query);
     $mysqli->close();
     return $result;
+}
+
+function getShortInfoUser($id){
+    $mysqli = connectBD();
+    $query = "SELECT name, email FROM `users` WHERE `id` = $id";
+    $result = $mysqli->query($query);
+    $row = $result->fetch_array(MYSQLI_ASSOC);
+    $mysqli->close();
+    return $row;
 }
 
 function getUserMessages($id_user, $group_id){
@@ -78,7 +91,7 @@ function getVerifiedUsersBD(){
                 FROM 
                 users
                 LEFT JOIN user_groups ON users.id=user_groups.user_id
-                 WHERE user_groups.name='Проверенные'";
+                 WHERE user_groups.group_name='Проверенные'";
     $result = $mysqli->query($query);
     $mysqli->close();
     $row = $result->fetch_all(MYSQLI_ASSOC);
