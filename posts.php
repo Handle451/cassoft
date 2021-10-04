@@ -14,7 +14,7 @@
                                     <div class="ms-2 me-auto">
                                         <div class="fw-bold"><?php echo $group?></div>
                                             <?php foreach($mess as $message){?>
-                                                <div><a href="message.php?id=<?php echo $message['id'];?>"><?php echo $message['title'];?></a><?php ($message['readed'] == '0') ? print('&emsp;&emsp;(новое)'):'';?></div>
+                                                <div><a href="message.php?id=<?php echo $message['id'];?>"><?php echo $message['title'];?></a><?php ($message['readed'] == '0' && $message['sendler_id'] != $_SESSION['id']) ? print('&emsp;&emsp;(новое)'):'';?></div>
                                             <?php }?>
                                     </div>
                                     <span class="badge bg-primary rounded-pill"><?php echo count($mess);?></span>

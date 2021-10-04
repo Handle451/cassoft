@@ -34,7 +34,7 @@ function getUser($id){
 
 function getUserMessages($id_user, $group_id){
     $mysqli = connectBD();
-    $query = "SELECT * FROM `messages` WHERE `sendler_id` = $id_user AND `group_id`= $group_id";
+    $query = "SELECT * FROM `messages` WHERE (`sendler_id` = $id_user OR `receiver_id` = $id_user) AND `group_id`= $group_id";
     $result = $mysqli->query($query);
     $mysqli->close();
     $row = $result->fetch_all(MYSQLI_ASSOC);
@@ -56,7 +56,7 @@ function getMessageQuery($id_message){
 
 function getGroups($id_user){
     $mysqli = connectBD();
-    $query = "SELECT * FROM `message_group` WHERE `user_id` = $id_user";
+    $query = "SELECT * FROM `message_group` WHERE `user_id` = $id_user OR `receiver_id` = $id_user";
     $result = $mysqli->query($query);
     $mysqli->close();
     $row = $result->fetch_all(MYSQLI_ASSOC);

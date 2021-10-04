@@ -1,6 +1,6 @@
 <?php    
     define("HOSTNAME","localhost");
-    define("USERNAME","opencart");
-    define("PASSWORD","opencart");
+    define("USERNAME","root");
+    define("PASSWORD","root");
     define("DBNAME","cassoft");
 	

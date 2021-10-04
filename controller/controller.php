@@ -52,8 +52,8 @@ function getMessageGroups($id_user){
     foreach($row as $value){
         $group_id = $value['id'];
         $group_title = $value['group_title'];
-        $row = getUserMessages($id_user, $group_id);
-        $messages[$group_title] = $row;
+        $rowMes = getUserMessages($id_user, $group_id);
+        $messages[$group_title] = $rowMes;
     }
     return $messages;       
 }
